@@ -2,21 +2,19 @@ package fn
 
 import (
 	"testing"
-
-	"github.com/cdutwhu/debog/base"
 )
 
 func TestDebug(t *testing.T) {
 	SetLog(logfile4test)
-	str := Debug("%v", base.Caller(false))
+	str := Debug("%v", caller(false))
 	fPln("---" + str)
 	ResetLog()
-	Debug("%v", base.Caller(false))
+	Debug("%v", caller(false))
 }
 
 func TestDebugWhen(t *testing.T) {
 	SetLog(logfile4test)
-	str := DebugWhen(true, "%v", base.Caller(false))
+	str := DebugWhen(true, "%v", caller(false))
 	fPln("---" + str)
 }
 

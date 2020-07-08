@@ -2,8 +2,6 @@ package fn
 
 import (
 	"log"
-
-	"github.com/cdutwhu/debog/base"
 )
 
 func warnOnErr(lvl int, format string, v ...interface{}) (string, error) {
@@ -12,11 +10,11 @@ func warnOnErr(lvl int, format string, v ...interface{}) (string, error) {
 		case error:
 			{
 				if p != nil {
-					tc := base.TrackCaller(lvl)
-					v = append([]interface{}{mFnType[base.Caller(false)]}, v...)
+					tc := trackCaller(lvl)
+					v = append([]interface{}{mFnType[caller(false)]}, v...)
 					warnItem := fSf("\t%s \t\""+format+"\"%s\n", append(v, tc)...)
 					log.Printf(warnItem)
-					return tc, fEf("%v", tmstr()+base.RmTailFromLast(warnItem, tc))
+					return tc, fEf("%v", tmstr()+rmTailFromLast(warnItem, tc))
 				}
 			}
 		}

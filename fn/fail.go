@@ -2,8 +2,6 @@ package fn
 
 import (
 	"log"
-
-	"github.com/cdutwhu/debog/base"
 )
 
 func failOnErr(lvl int, format string, v ...interface{}) {
@@ -12,8 +10,8 @@ func failOnErr(lvl int, format string, v ...interface{}) {
 		case error:
 			{
 				if p != nil {
-					tc := base.TrackCaller(lvl)
-					v = append([]interface{}{mFnType[base.Caller(false)]}, v...)
+					tc := trackCaller(lvl)
+					v = append([]interface{}{mFnType[caller(false)]}, v...)
 					fatalInfo := fSf("\t%s \t\""+format+"\"%s\n", append(v, tc)...)
 					if FlagFileLog() {
 						fPln(tmstr() + fatalInfo)

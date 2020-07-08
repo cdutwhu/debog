@@ -2,13 +2,11 @@ package fn
 
 import (
 	"log"
-
-	"github.com/cdutwhu/debog/base"
 )
 
 // Logger : write info into Console OR File
 func Logger(format string, v ...interface{}) string {
-	v = append([]interface{}{mFnType[base.Caller(false)]}, v...)
+	v = append([]interface{}{mFnType[caller(false)]}, v...)
 	logItem := fSf("\t%s \t\""+format+"\"\n\n", v...)
 	log.Printf("%s", logItem)
 	return tmstr() + logItem

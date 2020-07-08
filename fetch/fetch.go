@@ -4,28 +4,19 @@ import (
 	"io/ioutil"
 	"regexp"
 	"time"
-
-	"github.com/cdutwhu/debog/base"
 )
 
 // GetLog : logType [INFO, DEBUG, WARN, FAIL]; tmBackwards second unit
 func GetLog(logFile, logType string, tmBackwards int, desc bool) ([]string, error) {
 
-	if !base.Exist(logType, "INFO", "DEBUG", "WARN", "FAIL") {
-		return nil, fEf("logType is not supported")
-	}
+	failPOnErrWhen(!exist(logType, "INFO", "DEBUG", "WARN", "FAIL"), "%v", fEf("logType is not supported"))
 
 	// LIKE `ABC@AEST+ 2.0.log` `DEF@AEST-10.0.log`
 	r := regexp.MustCompile(`.+@.+[\+-][ 0-9]{2}\.[0-9]\.log$`)
-	if !r.MatchString(logFile) {
-		return nil, fEf("logFile is not acceptable format")
-	}
+	failPOnErrWhen(!r.MatchString(logFile), "%v", fEf("logFile is not acceptable format"))
 
 	bytes, err := ioutil.ReadFile(logFile)
-	// FailOnErr("%v", err)
-	if err != nil {
-		return nil, err
-	}
+	failPOnErr("%v", err)
 
 	logFileHead := logFile[:len(logFile)-4]     // remove ".log"
 	offset := logFileHead[len(logFileHead)-5:]  // pick up offset hour after "@", [+/-]NN.N
@@ -82,8 +73,8 @@ func Log2CSV(logFile, logType string, tmBackwards int, desc bool) (string, error
 	}
 	content := "Time,Type,Desc\n"
 	content += sReplaceAll(sJoin(logs, "\n"), " \t", ",")
-	file := base.RmTailFromLast(logFile, ".") + "-" + logType + ".csv"
-	base.MustWriteFile(file, []byte(content))
+	file := rmTailFromLast(logFile, ".") + "-" + logType + ".csv"
+	mustWriteFile(file, []byte(content))
 	return file, nil
 }
 
@@ -97,7 +88,7 @@ func Log2File(logFile, logType string, tmBackwards int, desc bool) (string, erro
 		return "", nil
 	}
 	content := sJoin(logs, "\n")
-	file := base.RmTailFromLast(logFile, ".") + "-" + logType + "." + base.RmHeadToLast(logFile, ".")
-	base.MustWriteFile(file, []byte(content))
+	file := rmTailFromLast(logFile, ".") + "-" + logType + "." + rmHeadToLast(logFile, ".")
+	mustWriteFile(file, []byte(content))
 	return file, nil
 }

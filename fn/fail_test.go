@@ -2,20 +2,18 @@ package fn
 
 import (
 	"testing"
-
-	"github.com/cdutwhu/debog/base"
 )
 
 func TestFailOnErr(t *testing.T) {
 	SetLog(logfile4test)
-	FailOnErr("%v", fEf(base.Caller(false)))
+	FailOnErr("%v", fEf(caller(false)))
 }
 
 func TestFailOnErrWhen(t *testing.T) {
 	SetLog(logfile4test)
-	FailOnErrWhen(false, "%v", fEf(base.Caller(false)))
+	FailOnErrWhen(false, "%v", fEf(caller(false)))
 	fPln(" -------------------- ")
-	FailOnErrWhen(true, "%v", fEf(base.Caller(false)))
+	FailOnErrWhen(true, "%v", fEf(caller(false)))
 }
 
 func FakeFuncFailP(i int) {

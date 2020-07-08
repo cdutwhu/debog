@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/cdutwhu/debog/base"
 )
 
 var (
@@ -19,6 +21,11 @@ var (
 	sSplit       = strings.Split
 	sContains    = strings.Contains
 	scParseFloat = strconv.ParseFloat
+
+	mustAppendFile = base.MustAppendFile
+	trackCaller    = base.TrackCaller
+	caller         = base.Caller
+	rmTailFromLast = base.RmTailFromLast
 )
 
 const (

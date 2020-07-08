@@ -23,7 +23,7 @@ func TestFetchLog(t *testing.T) {
 	// 	}
 	// }
 
-	logs, err := GetLog("../a/b@AEST+10.0.log", "WARN", 10, true)
+	logs, err := GetLog("../a/b@AEST+11.0.log", "WARN", 10, true)
 	fn.FailOnErr("%v", err)
 	for _, ln := range logs {
 		fPln(ln)

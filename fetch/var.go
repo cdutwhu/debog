@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/cdutwhu/debog/base"
+	"github.com/cdutwhu/debog/fn"
 )
 
 var (
@@ -17,6 +20,13 @@ var (
 	sSplit       = strings.Split
 	sContains    = strings.Contains
 	scParseFloat = strconv.ParseFloat
+
+	exist          = base.Exist
+	rmTailFromLast = base.RmTailFromLast
+	mustWriteFile  = base.MustWriteFile
+	rmHeadToLast   = base.RmHeadToLast
+	failPOnErr     = fn.FailPOnErr
+	failPOnErrWhen = fn.FailPOnErrWhen
 )
 
 const tmFmt = "2006/01/02 15:04:05"
