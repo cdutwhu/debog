@@ -7,9 +7,9 @@ import (
 )
 
 // GetLog : logType [INFO, DEBUG, WARN, FAIL]; tmBackwards second unit
-func GetLog(logFile, logType string, tmBackwards int, desc bool) ([]string, error) {
+func GetLog(logFile, logType string, tmBackwards int, desc bool) []string {
 
-	failPOnErrWhen(!exist(logType, "INFO", "DEBUG", "WARN", "FAIL"), "%v", fEf("logType is not supported"))
+	failPOnErrWhen(!exist(logType, "ALL", "INFO", "DEBUG", "WARN", "FAIL"), "%v", fEf("logType is not supported"))
 
 	// LIKE `ABC@AEST+ 2.0.log` `DEF@AEST-10.0.log`
 	r := regexp.MustCompile(`.+@.+[\+-][ 0-9]{2}\.[0-9]\.log$`)
@@ -22,32 +22,29 @@ func GetLog(logFile, logType string, tmBackwards int, desc bool) ([]string, erro
 	offset := logFileHead[len(logFileHead)-5:]  // pick up offset hour after "@", [+/-]NN.N
 	offset = sReplaceAll(offset, " ", "")       // remove BLANK " " in such as "+ 2.0"
 	hourOffset, err := scParseFloat(offset, 32) // string to float
-	if err != nil {
-		return nil, err
-	}
+	failOnErr("%v", err)
 	tmOffset := hourOffset * 3600 // hours to seconds
+	// fPln(tmOffset)
 
-	past := time.Now().UTC().Add(-time.Second * time.Duration(tmBackwards))
-	fPln(past)
-
-	past = time.Now().UTC()
-	fPln(past)
-	fPln(time.Now())
-
-	fPln(" ------------------ ")
+	nowUTC := time.Now().UTC()
+	// fPln(nowUTC)
+	pastUTC := nowUTC.Add(-time.Second * time.Duration(tmBackwards))
+	// fPln(pastUTC)
+	// fPln(" ------------------ ")
 
 	re := regexp.MustCompile(fSf(`^[0-9/: ]{20}\t%s \t`, logType))
+	if logType == "ALL" {
+		re = regexp.MustCompile(`^[0-9/: ]{20}\t`)
+	}
+
 	logs := []string{}
 	for _, ln := range sSplit(string(bytes), "\n") {
 		if re.MatchString(ln) {
 			tm, err := time.Parse(tmFmt, ln[:19])
-			if err != nil {
-				return nil, err
-			}
-			// FailOnErr("%v", err)
-			if tm.After(past) {
-				tm = tm.Add(time.Second * time.Duration(tmOffset))
-				ln = tm.Format(tmFmt) + ln[19:]
+			failOnErr("%v %v", tm, err)
+			tmUTC := tm.Add(-time.Second * time.Duration(tmOffset)) // log items -> UTC time
+			// fPln(tmUTC)
+			if tmUTC.After(pastUTC) {
 				logs = append(logs, ln)
 			}
 		}
@@ -59,36 +56,31 @@ func GetLog(logFile, logType string, tmBackwards int, desc bool) ([]string, erro
 		}
 	}
 
-	return logs, nil
+	return logs
 }
 
 // Log2CSV :
-func Log2CSV(logFile, logType string, tmBackwards int, desc bool) (string, error) {
-	logs, err := GetLog(logFile, logType, tmBackwards, desc)
-	if err != nil {
-		return "", err
-	}
+func Log2CSV(logFile, logType string, tmBackwards int, desc bool) string {
+	logs := GetLog(logFile, logType, tmBackwards, desc)
 	if len(logs) == 0 {
-		return "", nil
+		return ""
 	}
 	content := "Time,Type,Desc\n"
 	content += sReplaceAll(sJoin(logs, "\n"), " \t", ",")
-	file := rmTailFromLast(logFile, ".") + "-" + logType + ".csv"
+	file := rmTailFromLast(logFile, "@") + "-" + logType + "@" + rmHeadToLast(logFile, "@")
+	file = file[:len(file)-4] + ".csv"
 	mustWriteFile(file, []byte(content))
-	return file, nil
+	return file
 }
 
 // Log2File :
-func Log2File(logFile, logType string, tmBackwards int, desc bool) (string, error) {
-	logs, err := GetLog(logFile, logType, tmBackwards, desc)
-	if err != nil {
-		return "", err
-	}
+func Log2File(logFile, logType string, tmBackwards int, desc bool) string {
+	logs := GetLog(logFile, logType, tmBackwards, desc)
 	if len(logs) == 0 {
-		return "", nil
+		return ""
 	}
 	content := sJoin(logs, "\n")
-	file := rmTailFromLast(logFile, ".") + "-" + logType + "." + rmHeadToLast(logFile, ".")
+	file := rmTailFromLast(logFile, "@") + "-" + logType + "@" + rmHeadToLast(logFile, "@")
 	mustWriteFile(file, []byte(content))
-	return file, nil
+	return file
 }

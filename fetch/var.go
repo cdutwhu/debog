@@ -25,6 +25,7 @@ var (
 	rmTailFromLast = base.RmTailFromLast
 	mustWriteFile  = base.MustWriteFile
 	rmHeadToLast   = base.RmHeadToLast
+	failOnErr      = fn.FailOnErr
 	failPOnErr     = fn.FailPOnErr
 	failPOnErrWhen = fn.FailPOnErrWhen
 )

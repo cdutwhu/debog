@@ -2,8 +2,6 @@ package fetch
 
 import (
 	"testing"
-
-	"github.com/cdutwhu/debog/fn"
 )
 
 func TestFetchLog(t *testing.T) {
@@ -23,11 +21,13 @@ func TestFetchLog(t *testing.T) {
 	// 	}
 	// }
 
-	logs, err := GetLog("../a/b@AEST+11.0.log", "WARN", 10, true)
-	fn.FailOnErr("%v", err)
+	logs := GetLog("../a/b@AEST+10.0.log", "DEBUG", 1000, true)
 	for _, ln := range logs {
 		fPln(ln)
 	}
-	// FetchLog2File("./mylog@AEST+10.log", "FAIL", 10000, true)
-	// FetchLog2CSV("./mylog@AEST+10.log", "FAIL", 10000, true)
+
+	fPln(" ----- ")
+
+	fPln(Log2File("../a/b@AEST+10.0.log", "ALL", 10000, true))
+	fPln(Log2CSV("../a/b@AEST+10.0.log", "ALL", 10000, true))
 }
