@@ -17,10 +17,10 @@ func TestFailOnErrWhen(t *testing.T) {
 }
 
 func FakeFuncFailP(i int) {
-	FailPOnErrWhen(i < 0, "%v", fEf("Invalid Param"))
+	FailP1OnErrWhen(i < 0, "%v", fEf("Invalid Param"))
 }
 
-func TestFailPOnErrWhen(t *testing.T) {
+func TestFailP1OnErrWhen(t *testing.T) {
 	SetLog(logfile4test)
 	FakeFuncFailP(-5)
 }

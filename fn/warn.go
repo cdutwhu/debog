@@ -35,13 +35,13 @@ func WarnOnErrWhen(condition bool, format string, v ...interface{}) (string, err
 	return "", nil
 }
 
-// WarnPOnErr : write error into Console OR File
-func WarnPOnErr(format string, v ...interface{}) (string, error) {
+// WarnP1OnErr : write error into Console OR File
+func WarnP1OnErr(format string, v ...interface{}) (string, error) {
 	return warnOnErr(5, format, v...)
 }
 
-// WarnPOnErrWhen : write error into Console OR File
-func WarnPOnErrWhen(condition bool, format string, v ...interface{}) (string, error) {
+// WarnP1OnErrWhen : write error into Console OR File
+func WarnP1OnErrWhen(condition bool, format string, v ...interface{}) (string, error) {
 	if condition {
 		return warnOnErr(5, format, v...)
 	}

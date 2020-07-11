@@ -25,13 +25,13 @@ func DebugWhen(condition bool, format string, v ...interface{}) string {
 	return ""
 }
 
-// DebugP :
-func DebugP(format string, v ...interface{}) string {
+// DebugP1 :
+func DebugP1(format string, v ...interface{}) string {
 	return debug(5, format, v...)
 }
 
-// DebugPWhen : write info into Console OR File
-func DebugPWhen(condition bool, format string, v ...interface{}) string {
+// DebugP1When : write info into Console OR File
+func DebugP1When(condition bool, format string, v ...interface{}) string {
 	if condition {
 		return debug(5, format, v...)
 	}

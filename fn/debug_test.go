@@ -19,7 +19,7 @@ func TestDebugWhen(t *testing.T) {
 }
 
 func FakeFuncDebugP(i int) {
-	where := DebugPWhen(i < 0, "Invalid Param")
+	where := DebugP1When(i < 0, "Invalid Param")
 	fPln("---" + where)
 }
 

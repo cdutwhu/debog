@@ -20,11 +20,11 @@ func TestWarnOnErrWhen(t *testing.T) {
 }
 
 func FakeFuncWarnP(i int) {
-	where, err := WarnPOnErrWhen(i < 0, "%v", fEf("Invalid Param"))
+	where, err := WarnP1OnErrWhen(i < 0, "%v", fEf("Invalid Param"))
 	fPln(err, where)
 }
 
-func TestWarnPOnErrWhen(t *testing.T) {
+func TestWarnP1OnErrWhen(t *testing.T) {
 	SetLog(logfile4test)
 	FakeFuncWarnP(-5)
 }

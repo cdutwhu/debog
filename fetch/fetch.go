@@ -9,14 +9,14 @@ import (
 // GetLog : logType [INFO, DEBUG, WARN, FAIL]; tmBackwards second unit
 func GetLog(logFile, logType string, tmBackwards int, desc bool) []string {
 
-	failPOnErrWhen(!exist(logType, "ALL", "INFO", "DEBUG", "WARN", "FAIL"), "%v", fEf("logType is not supported"))
+	failP1OnErrWhen(!exist(logType, "ALL", "INFO", "DEBUG", "WARN", "FAIL"), "%v", fEf("logType is not supported"))
 
 	// LIKE `ABC@AEST+ 2.0.log` `DEF@AEST-10.0.log`
 	r := regexp.MustCompile(`.+@.+[\+-][ 0-9]{2}\.[0-9]\.log$`)
-	failPOnErrWhen(!r.MatchString(logFile), "%v", fEf("logFile is not acceptable format"))
+	failP1OnErrWhen(!r.MatchString(logFile), "%v", fEf("logFile is not acceptable format"))
 
 	bytes, err := ioutil.ReadFile(logFile)
-	failPOnErr("%v", err)
+	failP1OnErr("%v", err)
 
 	logFileHead := logFile[:len(logFile)-4]     // remove ".log"
 	offset := logFileHead[len(logFileHead)-5:]  // pick up offset hour after "@", [+/-]NN.N

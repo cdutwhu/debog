@@ -35,14 +35,26 @@ func FailOnErrWhen(condition bool, format string, v ...interface{}) {
 	}
 }
 
-// FailPOnErr : error holder use "%v"
-func FailPOnErr(format string, v ...interface{}) {
+// FailP1OnErr : error holder use "%v"
+func FailP1OnErr(format string, v ...interface{}) {
 	failOnErr(5, format, v...)
 }
 
-// FailPOnErrWhen :
-func FailPOnErrWhen(condition bool, format string, v ...interface{}) {
+// FailP1OnErrWhen :
+func FailP1OnErrWhen(condition bool, format string, v ...interface{}) {
 	if condition {
 		failOnErr(5, format, v...)
+	}
+}
+
+// FailP2OnErr : error holder use "%v"
+func FailP2OnErr(format string, v ...interface{}) {
+	failOnErr(6, format, v...)
+}
+
+// FailP2OnErrWhen :
+func FailP2OnErrWhen(condition bool, format string, v ...interface{}) {
+	if condition {
+		failOnErr(6, format, v...)
 	}
 }
