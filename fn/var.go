@@ -26,6 +26,12 @@ var (
 	trackCaller    = base.TrackCaller
 	caller         = base.Caller
 	rmTailFromLast = base.RmTailFromLast
+	blue           = base.B
+	red            = base.R
+	green          = base.G
+	yellow         = base.Y
+	white          = base.W
+	decolor        = base.DeColor
 )
 
 const (

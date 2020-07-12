@@ -6,10 +6,14 @@ import (
 
 // Logger : write info into Console OR File
 func Logger(format string, v ...interface{}) string {
-	v = append([]interface{}{mFnType[caller(false)]}, v...)
+	typ := mFnType[caller(false)]
+	if !log2file {
+		typ = green(typ)
+	}
+	v = append([]interface{}{typ}, v...)
 	logItem := fSf("\t%s \t\""+format+"\"\n\n", v...)
 	log.Printf("%s", logItem)
-	return tmstr() + logItem
+	return tmstr() + decolor(logItem)
 }
 
 // LoggerWhen : write info into Console OR File

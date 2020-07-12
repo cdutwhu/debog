@@ -6,10 +6,14 @@ import (
 
 func debug(lvl int, format string, v ...interface{}) string {
 	tc := trackCaller(lvl)
-	v = append([]interface{}{mFnType[caller(false)]}, v...)
+	typ := mFnType[caller(false)]
+	if !log2file {
+		typ = blue(typ)
+	}
+	v = append([]interface{}{typ}, v...)
 	logItem := fSf("\t%s \t\""+format+"\"%s\n", append(v, tc)...)
 	log.Printf("%s", logItem)
-	return tmstr() + logItem
+	return tmstr() + decolor(logItem)
 }
 
 // Debug : write info into Console OR File

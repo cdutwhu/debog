@@ -10,6 +10,7 @@ var (
 	fPln         = fmt.Println
 	fSf          = fmt.Sprintf
 	fEf          = fmt.Errorf
+	fSt          = fmt.Sprint
 	sHasSuffix   = strings.HasSuffix
 	sLastIndex   = strings.LastIndex
 	sReplaceAll  = strings.ReplaceAll

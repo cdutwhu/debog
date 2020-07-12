@@ -50,3 +50,8 @@ func TestFuncTrack(t *testing.T) {
 	fPln(FuncTrack(p.hello))
 	fPln(FuncTrack(hello1))
 }
+
+func TestColorPrint(t *testing.T) {
+	// effect in bash
+	fPln(B("hello"))
+}

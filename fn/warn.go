@@ -11,10 +11,14 @@ func warnOnErr(lvl int, format string, v ...interface{}) (string, error) {
 			{
 				if p != nil {
 					tc := trackCaller(lvl)
-					v = append([]interface{}{mFnType[caller(false)]}, v...)
+					typ := mFnType[caller(false)]
+					if !log2file {
+						typ = yellow(typ)
+					}
+					v = append([]interface{}{typ}, v...)
 					warnItem := fSf("\t%s \t\""+format+"\"%s\n", append(v, tc)...)
 					log.Printf(warnItem)
-					return tc, fEf("%v", tmstr()+rmTailFromLast(warnItem, tc))
+					return tc, fEf("%v", tmstr()+rmTailFromLast(decolor(warnItem), tc))
 				}
 			}
 		}

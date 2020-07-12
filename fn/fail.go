@@ -11,11 +11,21 @@ func failOnErr(lvl int, format string, v ...interface{}) {
 			{
 				if p != nil {
 					tc := trackCaller(lvl)
-					v = append([]interface{}{mFnType[caller(false)]}, v...)
-					fatalInfo := fSf("\t%s \t\""+format+"\"%s\n", append(v, tc)...)
-					if FlagFileLog() {
+
+					// even if log2file, still output a copy to console.
+					if log2file {
+						typ := red(mFnType[caller(false)])
+						v1 := append([]interface{}{typ}, v...)
+						fatalInfo := fSf("\t%s \t\""+format+"\"%s\n", append(v1, tc)...)
 						fPln(tmstr() + fatalInfo)
 					}
+
+					typ := mFnType[caller(false)]
+					if !log2file {
+						typ = red(typ)
+					}
+					v2 := append([]interface{}{typ}, v...)
+					fatalInfo := fSf("\t%s \t\""+format+"\"%s\n", append(v2, tc)...)
 					log.Fatalf(fatalInfo)
 				}
 			}
