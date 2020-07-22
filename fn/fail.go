@@ -11,22 +11,31 @@ func failOnErr(lvl int, format string, v ...interface{}) {
 			{
 				if p != nil {
 					tc := trackCaller(lvl)
-
-					// even if log2file, still output a copy to console.
-					if log2file {
-						typ := red(mFnType[caller(false)])
-						v1 := append([]interface{}{typ}, v...)
-						fatalInfo := fSf("\t%s \t\""+format+"\"%s\n", append(v1, tc)...)
-						fPln(tmstr() + fatalInfo)
-					}
-
 					typ := mFnType[caller(false)]
-					if !log2file {
-						typ = red(typ)
+
+					switch {
+					case log2f && log2c:
+						// CONSOLE
+						v1 := append([]interface{}{red(typ)}, v...)
+						fatalInfo := fSf("\t%s \t\""+format+"\"%s\n", append(v1, tc)...)
+						fPt(tmstr() + fatalInfo)
+						// FILE
+						v2 := append([]interface{}{typ}, v...)
+						fatalInfo = fSf("\t%s \t\""+format+"\"%s\n", append(v2, tc)...)
+						log.Fatalf(fatalInfo)
+
+					case log2f && !log2c:
+						// FILE
+						v2 := append([]interface{}{typ}, v...)
+						fatalInfo := fSf("\t%s \t\""+format+"\"%s\n", append(v2, tc)...)
+						log.Fatalf(fatalInfo)
+
+					case !log2f && log2c:
+						// CONSOLE
+						v2 := append([]interface{}{red(typ)}, v...)
+						fatalInfo := fSf("\t%s \t\""+format+"\"%s\n", append(v2, tc)...)
+						log.Fatalf(fatalInfo)
 					}
-					v2 := append([]interface{}{typ}, v...)
-					fatalInfo := fSf("\t%s \t\""+format+"\"%s\n", append(v2, tc)...)
-					log.Fatalf(fatalInfo)
 				}
 			}
 		}

@@ -5,26 +5,26 @@ import (
 )
 
 func TestWarnOnErr(t *testing.T) {
-	SetLog(logfile4test)
-	where, err := WarnOnErr("%v", fEf(caller(false)))
-	fPln(where, err)
+	EnableLog2F(true, logfile4test)
+	err := WarnOnErr("%v", fEf(caller(false)))
+	fPln(err)
 }
 
 func TestWarnOnErrWhen(t *testing.T) {
-	SetLog(logfile4test)
-	where, err := WarnOnErrWhen(false, "%v", fEf(caller(false)))
-	fPln(err, where)
+	EnableLog2F(true, logfile4test)
+	err := WarnOnErrWhen(false, "%v", fEf(caller(false)))
+	fPln(err)
 	fPln(" -------------------- ")
-	where, err = WarnOnErrWhen(true, "%v", fEf(caller(false)))
-	fPln(err, where)
+	err = WarnOnErrWhen(true, "%v", fEf(caller(false)))
+	fPln(err)
 }
 
 func FakeFuncWarnP(i int) {
-	where, err := WarnP1OnErrWhen(i < 0, "%v", fEf("Invalid Param"))
-	fPln(err, where)
+	err := WarnP1OnErrWhen(i < 0, "%v", fEf("Invalid Param"))
+	fPln(err)
 }
 
 func TestWarnP1OnErrWhen(t *testing.T) {
-	SetLog(logfile4test)
+	EnableLog2F(true, logfile4test)
 	FakeFuncWarnP(-5)
 }

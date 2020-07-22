@@ -5,13 +5,11 @@ import (
 )
 
 func TestLogger(t *testing.T) {
-	SetLog(logfile4test)
-	str := Logger("%v", caller(false))
-	fPln(str)
+	EnableLog2F(true, logfile4test)
+	Logger("%v", caller(false))	
 }
 
 func TestLoggerWhen(t *testing.T) {
-	SetLog(logfile4test)
-	str := LoggerWhen(true, "%v", caller(false))
-	fPln(str)
+	EnableLog2F(true, logfile4test)
+	LoggerWhen(true, "%v", caller(false))	
 }

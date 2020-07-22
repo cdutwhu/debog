@@ -5,25 +5,22 @@ import (
 )
 
 func TestDebug(t *testing.T) {
-	SetLog(logfile4test)
-	str := Debug("%v", caller(false))
-	fPln("---" + str)
-	ResetLog()
+	EnableLog2F(true, logfile4test)
+	Debug("%v", caller(false))
+	EnableLog2F(false, "")
 	Debug("%v", caller(false))
 }
 
 func TestDebugWhen(t *testing.T) {
-	SetLog(logfile4test)
-	str := DebugWhen(true, "%v", caller(false))
-	fPln("---" + str)
+	EnableLog2F(true, logfile4test)
+	DebugWhen(true, "%v", caller(false))
 }
 
 func FakeFuncDebugP(i int) {
-	where := DebugP1When(i < 0, "Invalid Param")
-	fPln("---" + where)
+	DebugP1When(i < 0, "Invalid Param")
 }
 
 func TestDebugPWhen(t *testing.T) {
-	SetLog(logfile4test)
+	EnableLog2F(true, logfile4test)
 	FakeFuncDebugP(-5)
 }

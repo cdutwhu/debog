@@ -11,6 +11,7 @@ import (
 )
 
 var (
+	fPt          = fmt.Print
 	fPln         = fmt.Println
 	fSf          = fmt.Sprintf
 	fEf          = fmt.Errorf
@@ -40,7 +41,8 @@ const (
 )
 
 var (
-	log2file                      = false
+	log2c                         = true
+	log2f                         = false
 	mPathFile map[string]*os.File = make(map[string]*os.File)
 	mFnType   map[string]string   = map[string]string{
 		"Logger":    "INFO",
