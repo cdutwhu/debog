@@ -7,19 +7,17 @@ import (
 )
 
 func main() {
+
 	// for i := 0; i < base.CLRCOUNT; i++ {
 	// 	fmt.Println(base.ClrGrp[i]("color"), "normal")
 	// }
-
-	// fmt.Println(" -------------------------------- ")
-
 	// fmt.Println(base.R("Red"))
 	// fmt.Println(base.G("Green"))
 	// fmt.Println(base.B("Blue"))
 	// fmt.Println(base.Y("Yellow"))
 	// fmt.Println(base.W("White"))
 
-	// fmt.Println(" -------------------------------- ")
+	// fmt.Println(" ------------------------------------- ")
 
 	fn.EnableLog2F(true, "./a.log")
 	fn.EnableLog2C(false)
