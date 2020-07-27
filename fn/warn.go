@@ -4,6 +4,11 @@ import (
 	"log"
 )
 
+const (
+	toF = iota
+	toC
+)
+
 func warnOnErr(lvl int, format string, v ...interface{}) error {
 	for _, p := range v {
 		switch p.(type) {
@@ -12,31 +17,40 @@ func warnOnErr(lvl int, format string, v ...interface{}) error {
 				if p != nil {
 					tc := trackCaller(lvl)
 					typ := mFnType[caller(false)]
+					item := ""
 
 					switch {
-					case log2f && log2c:
-						// FILE
-						v1 := append([]interface{}{typ}, v...)
-						item := fSf("\t%s \t\""+format+"\"%s", append(v1, tc)...)
-						log.Printf("%s", item)
-						// CONSOLE
-						v2 := append([]interface{}{yellow(typ)}, v...)
-						item = fSf("\t%s \t\""+format+"\"%s", append(v2, tc)...)
-						fPt(tmstr() + item)
+					case log2F && log2C:
+						for i := toF; i <= toC; i++ {
+							if i == toC {
+								typ = yellow(typ)
+							}
+							v1 := append([]interface{}{typ}, v...)
+							if warnWithDetail {
+								item = fSf("\t%s \t\""+format+"\"%s", append(v1, tc)...)
+							} else {
+								item = fSf("\t%s \t\""+format+"\"\n", v1...)
+							}
+							if i == toF {
+								log.Printf("%s", item)
+							} else if i == toC {
+								fPt(tmstr() + item)
+							}
+						}
+						return p.(error)
 
-					case log2f && !log2c:
-						// FILE
-						v1 := append([]interface{}{typ}, v...)
-						item := fSf("\t%s \t\""+format+"\"%s", append(v1, tc)...)
-						log.Printf("%s", item)
-
-					case !log2f && log2c:
-						// CONSOLE
-						v1 := append([]interface{}{yellow(typ)}, v...)
-						item := fSf("\t%s \t\""+format+"\"%s", append(v1, tc)...)
-						log.Printf("%s", item)
+					case log2F && !log2C:
+					case !log2F && log2C:
+						typ = yellow(typ)
 					}
 
+					v1 := append([]interface{}{typ}, v...)
+					if warnWithDetail {
+						item = fSf("\t%s \t\""+format+"\"%s", append(v1, tc)...)
+					} else {
+						item = fSf("\t%s \t\""+format+"\"\n", v1...)
+					}
+					log.Printf("%s", item)
 					return p.(error)
 				}
 			}

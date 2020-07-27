@@ -7,9 +7,14 @@ import (
 	"time"
 )
 
+// EnableWarnDetail :
+func EnableWarnDetail(enable bool) {
+	warnWithDetail = enable
+}
+
 // EnableLog2C :
 func EnableLog2C(enable bool) {
-	log2c = enable
+	log2C = enable
 }
 
 // EnableLog2F :
@@ -39,7 +44,7 @@ func setLog(logfile string) {
 			mPathFile[abspath] = f
 			log.SetFlags(log.LstdFlags) // log.SetFlags(log.LstdFlags | log.LUTC)
 			log.SetOutput(f)
-			log2f = true
+			log2F = true
 		}
 	}
 }
@@ -62,6 +67,6 @@ func resetLog() error {
 	}
 	mPathFile = make(map[string]*os.File)
 	log.SetOutput(os.Stdout)
-	log2f = false
+	log2F = false
 	return nil
 }

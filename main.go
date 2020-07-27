@@ -20,7 +20,8 @@ func main() {
 	// fmt.Println(" ------------------------------------- ")
 
 	fn.EnableLog2F(true, "./a.log")
-	fn.EnableLog2C(false)
+	fn.EnableLog2C(true)
+	fn.EnableWarnDetail(false)
 
 	fn.Logger("logger test")
 	fn.Debug("debug test")

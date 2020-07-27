@@ -41,8 +41,10 @@ const (
 )
 
 var (
-	log2c                         = true
-	log2f                         = false
+	log2C          = true
+	log2F          = false
+	warnWithDetail = true
+
 	mPathFile map[string]*os.File = make(map[string]*os.File)
 	mFnType   map[string]string   = map[string]string{
 		"Logger":    "INFO",
