@@ -90,7 +90,7 @@ func TrackCaller(lvl int) string {
 }
 
 // CallerSrc :
-func CallerSrc() (src, dir string) {
+func CallerSrc() (dir, src string) {
 	file, _, _ := trackCaller(1)
 	return filepath.Dir(file), filepath.Base(file)
 }
