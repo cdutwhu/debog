@@ -6,9 +6,9 @@ import (
 
 func TestDebug(t *testing.T) {
 	EnableLog2F(true, logfile4test)
-	Debug("%v", caller(false))
+	Debug("%v", "*** Debug ***")
 	EnableLog2F(false, "")
-	Debug("%v", caller(false))
+	Debug("%v", "*** Debug ***")
 }
 
 func TestDebugWhen(t *testing.T) {

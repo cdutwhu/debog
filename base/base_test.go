@@ -20,7 +20,7 @@ func TestRmHeadToLast(t *testing.T) {
 func TestMustWriteFile(t *testing.T) {
 	str := "hello write"
 	MustWriteFile("../a/b.log", []byte(str))
-	// MustWriteFile("/root/a/b.log", []byte(str))
+	MustWriteFile("/root/a/b.log", []byte(str))
 	// MustWriteFile("/var/log/debog/test.log", []byte(str))
 }
 
@@ -30,10 +30,7 @@ func TestMustAppendFile(t *testing.T) {
 	// MustAppendFile("/root/a/b.log", []byte(str), true)
 }
 
-func TestCaller(t *testing.T) {
-	fPln(Caller(false))
-	fPln(Caller(true))
-}
+// ------------------------------------------ //
 
 type Tp struct {
 }
@@ -55,4 +52,30 @@ func TestFuncTrack(t *testing.T) {
 func TestColorPrint(t *testing.T) {
 	// effect in bash
 	fPln(B("hello"))
+}
+
+func TestTrackCallerIn(t *testing.T) {
+	fPln(trackCaller(0))
+}
+
+func TestTrackCaller(t *testing.T) {
+	fPln(TrackCaller(0))
+}
+
+func TestCallerSrc(t *testing.T) {
+	fPln(CallerSrc())
+}
+
+func TestCaller(t *testing.T) {
+	fPln(Caller(false))
+	fPln(Caller(true))
+}
+
+func Wrapper() {
+	fPln(ParentCaller(false))
+	fPln(ParentCaller(true))
+}
+
+func TestParentCaller(t *testing.T) {
+	Wrapper()
 }

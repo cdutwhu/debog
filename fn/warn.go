@@ -61,26 +61,26 @@ func warnOnErr(lvl int, format string, v ...interface{}) error {
 
 // WarnOnErr : write error into Console OR File
 func WarnOnErr(format string, v ...interface{}) error {
-	return warnOnErr(4, format, v...)
+	return warnOnErr(2, format, v...)
 }
 
 // WarnOnErrWhen : write error into Console OR File
 func WarnOnErrWhen(condition bool, format string, v ...interface{}) error {
 	if condition {
-		return warnOnErr(4, format, v...)
+		return warnOnErr(2, format, v...)
 	}
 	return nil
 }
 
 // WarnP1OnErr : write error into Console OR File
 func WarnP1OnErr(format string, v ...interface{}) error {
-	return warnOnErr(5, format, v...)
+	return warnOnErr(3, format, v...)
 }
 
 // WarnP1OnErrWhen : write error into Console OR File
 func WarnP1OnErrWhen(condition bool, format string, v ...interface{}) error {
 	if condition {
-		return warnOnErr(5, format, v...)
+		return warnOnErr(3, format, v...)
 	}
 	return nil
 }

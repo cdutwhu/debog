@@ -35,24 +35,24 @@ func debug(lvl int, format string, v ...interface{}) {
 
 // Debug : write info into Console OR File
 func Debug(format string, v ...interface{}) {
-	debug(4, format, v...)
+	debug(2, format, v...)
 }
 
 // DebugWhen : write info into Console OR File
 func DebugWhen(condition bool, format string, v ...interface{}) {
 	if condition {
-		debug(4, format, v...)
+		debug(2, format, v...)
 	}
 }
 
 // DebugP1 :
 func DebugP1(format string, v ...interface{}) {
-	debug(5, format, v...)
+	debug(3, format, v...)
 }
 
 // DebugP1When : write info into Console OR File
 func DebugP1When(condition bool, format string, v ...interface{}) {
 	if condition {
-		debug(5, format, v...)
+		debug(3, format, v...)
 	}
 }

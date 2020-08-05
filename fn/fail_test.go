@@ -11,9 +11,9 @@ func TestFailOnErr(t *testing.T) {
 
 func TestFailOnErrWhen(t *testing.T) {
 	EnableLog2F(true, logfile4test)
-	// FailOnErrWhen(false, "%v", fEf(caller(false)))
-	// fPln(" -------------------- ")
-	// FailOnErrWhen(true, "%v", fEf(caller(false)))
+	FailOnErrWhen(false, "%v", fEf(caller(false)))
+	fPln(" -------------------- ")
+	FailOnErrWhen(true, "%v", fEf(caller(false)))
 }
 
 func FakeFuncFailP(i int) {
@@ -22,5 +22,5 @@ func FakeFuncFailP(i int) {
 
 func TestFailP1OnErrWhen(t *testing.T) {
 	EnableLog2F(true, logfile4test)
-	FakeFuncFailP(5)
+	FakeFuncFailP(-5)
 }

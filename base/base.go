@@ -72,40 +72,48 @@ func RmHeadToLast(s, mark string) string {
 
 // ------------------------------------------------------------------------------ //
 
-// Caller : get the caller name or path which called this `Caller`
-func Caller(fullpath bool) string {
+// lvl: 0. where `running trackCaller(...) in its caller, such as TrackCaller, Caller`
+func trackCaller(lvl int) (string, int, string) {
+	lvl += 2
 	pc := make([]uintptr, 15)
-	n := runtime.Callers(2, pc)
+	n := runtime.Callers(lvl, pc)
 	frames := runtime.CallersFrames(pc[:n])
 	frame, _ := frames.Next()
-	if fullpath {
-		return frame.Function
-	}
-	return RmHeadToLast(frame.Function, ".")
+	return frame.File, frame.Line, frame.Function
 }
 
-// ParentCaller : get the caller's caller name or path which called this `ParentCaller`
-func ParentCaller(fullpath bool) string {
-	pc := make([]uintptr, 15)
-	n := runtime.Callers(3, pc)
-	frames := runtime.CallersFrames(pc[:n])
-	frame, _ := frames.Next()
+// TrackCaller :
+// lvl: 0, where `running TrackCaller(0)`, who is its caller.
+func TrackCaller(lvl int) string {
+	file, line, fn := trackCaller(lvl + 1)
+	return fSf("\n%s:%d\n%s\n", file, line, fn)
+}
+
+// CallerSrc :
+func CallerSrc() (src, dir string) {
+	file, _, _ := trackCaller(1)
+	return filepath.Dir(file), filepath.Base(file)
+}
+
+// Caller :
+func Caller(fullpath bool) string {
+	_, _, fn := trackCaller(1)
 	if fullpath {
-		return frame.Function
+		return fn
 	}
-	return RmHeadToLast(frame.Function, ".")
+	return RmHeadToLast(fn, ".")
+}
+
+// ParentCaller :
+func ParentCaller(fullpath bool) string {
+	_, _, fn := trackCaller(2)
+	if fullpath {
+		return fn
+	}
+	return RmHeadToLast(fn, ".")
 }
 
 // FuncTrack : full path of func name
 func FuncTrack(i interface{}) string {
 	return runtime.FuncForPC(reflect.ValueOf(i).Pointer()).Name()
-}
-
-// TrackCaller :
-func TrackCaller(lvl int) string {
-	pc := make([]uintptr, 15)
-	n := runtime.Callers(lvl, pc) // lvl: 3 is for util-FailLog. 2 is for "TrackCaller" caller
-	frames := runtime.CallersFrames(pc[:n])
-	frame, _ := frames.Next()
-	return fSf("\n%s:%d\n%s\n", frame.File, frame.Line, frame.Function)
 }

@@ -44,36 +44,36 @@ func failOnErr(lvl int, format string, v ...interface{}) {
 
 // FailOnErr : error holder use "%v"
 func FailOnErr(format string, v ...interface{}) {
-	failOnErr(4, format, v...)
+	failOnErr(2, format, v...)
 }
 
 // FailOnErrWhen :
 func FailOnErrWhen(condition bool, format string, v ...interface{}) {
 	if condition {
-		failOnErr(4, format, v...)
+		failOnErr(2, format, v...)
 	}
 }
 
 // FailP1OnErr : error holder use "%v"
 func FailP1OnErr(format string, v ...interface{}) {
-	failOnErr(5, format, v...)
+	failOnErr(3, format, v...)
 }
 
 // FailP1OnErrWhen :
 func FailP1OnErrWhen(condition bool, format string, v ...interface{}) {
 	if condition {
-		failOnErr(5, format, v...)
+		failOnErr(3, format, v...)
 	}
 }
 
 // FailPnOnErr : error holder use "%v"
 func FailPnOnErr(n int, format string, v ...interface{}) {
-	failOnErr(4+n, format, v...)
+	failOnErr(2+n, format, v...)
 }
 
 // FailPnOnErrWhen :
 func FailPnOnErrWhen(condition bool, n int, format string, v ...interface{}) {
 	if condition {
-		failOnErr(4+n, format, v...)
+		failOnErr(2+n, format, v...)
 	}
 }

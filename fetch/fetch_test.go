@@ -21,13 +21,13 @@ func TestFetchLog(t *testing.T) {
 	// 	}
 	// }
 
-	logs := GetLog("../a/b@AEST+10.0.log", "DEBUG", 1000, true)
+	logs := GetLog("../a@AEST+10.0.log", "DEBUG", 1000, true)
 	for _, ln := range logs {
 		fPln(ln)
 	}
 
 	fPln(" ----- ")
 
-	fPln(Log2File("../a/b@AEST+10.0.log", "ALL", 10000, true))
-	fPln(Log2CSV("../a/b@AEST+10.0.log", "ALL", 10000, true))
+	fPln(Log2File("../a@AEST+10.0.log", "ALL", 10000, true))
+	fPln(Log2CSV("../a@AEST+10.0.log", "ALL", 10000, true))
 }
