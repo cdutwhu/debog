@@ -26,6 +26,9 @@ func EnableLog2F(enable bool, logfile string) {
 	}
 }
 
+// FilePerm :
+const FilePerm = 0666
+
 // setLog :
 func setLog(logfile string) {
 	zone, offset := time.Now().Zone()
@@ -40,7 +43,7 @@ func setLog(logfile string) {
 	logfile += fSf("@%s%s%4.1f%s", zone, cat, float32(offset/3600.0), ".log")
 	if abspath, err := filepath.Abs(logfile); err == nil {
 		mustAppendFile(abspath, nil, false)
-		if f, err := os.OpenFile(abspath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666); err == nil {
+		if f, err := os.OpenFile(abspath, os.O_RDWR|os.O_CREATE|os.O_APPEND, FilePerm); err == nil {
 			mPathFile[abspath] = f
 			log.SetFlags(log.LstdFlags) // log.SetFlags(log.LstdFlags | log.LUTC)
 			log.SetOutput(f)

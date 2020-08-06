@@ -9,15 +9,18 @@ import (
 	"runtime"
 )
 
+// FilePerm :
+const FilePerm = 0666
+
 // MustWriteFile :
 func MustWriteFile(filename string, data []byte) {
 	dir := filepath.Dir(filename)
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
-		if err := os.MkdirAll(dir, 0700); err != nil {
+		if err := os.MkdirAll(dir, FilePerm); err != nil {
 			log.Fatalf("Could NOT Create File to Write: %v @ %s", err, Caller(true))
 		}
 	}
-	if err := ioutil.WriteFile(filename, data, 0666); err != nil {
+	if err := ioutil.WriteFile(filename, data, FilePerm); err != nil {
 		log.Fatalf("Could NOT Write File: %v @ %s", err, Caller(true))
 	}
 }
@@ -28,7 +31,7 @@ func MustAppendFile(filename string, data []byte, newline bool) {
 		MustWriteFile(filename, []byte(""))
 	}
 
-	file, err := os.OpenFile(filename, os.O_APPEND|os.O_WRONLY, 0644)
+	file, err := os.OpenFile(filename, os.O_APPEND|os.O_WRONLY, FilePerm)
 	if err != nil {
 		log.Fatalf("Could NOT Open File to Write: %v @ %s", err, Caller(true))
 	}
