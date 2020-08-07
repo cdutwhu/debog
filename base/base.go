@@ -9,17 +9,28 @@ import (
 	"runtime"
 )
 
-// FilePerm :
-const FilePerm = 0666
+const (
+	// FilePerm :
+	FilePerm = 0666
+	// DirPerm :
+	DirPerm = 0777
+)
 
 // MustWriteFile :
 func MustWriteFile(filename string, data []byte) {
 	dir := filepath.Dir(filename)
-	if _, err := os.Stat(dir); os.IsNotExist(err) {
-		if err := os.MkdirAll(dir, FilePerm); err != nil {
+	_, err := os.Stat(dir)
+	if err != nil && os.IsNotExist(err) {
+		if err := os.MkdirAll(dir, DirPerm); err != nil { // dir must be 0777 to put writes in
 			log.Fatalf("Could NOT Create File to Write: %v @ %s", err, Caller(true))
 		}
+		goto WRITE
 	}
+	if err != nil {
+		log.Fatalf("Cound NOT Get file Status: %v @ %s", err, Caller(true))
+	}
+
+WRITE:
 	if err := ioutil.WriteFile(filename, data, FilePerm); err != nil {
 		log.Fatalf("Could NOT Write File: %v @ %s", err, Caller(true))
 	}
@@ -27,21 +38,26 @@ func MustWriteFile(filename string, data []byte) {
 
 // MustAppendFile :
 func MustAppendFile(filename string, data []byte, newline bool) {
-	if _, err := os.Stat(filename); os.IsNotExist(err) {
-		MustWriteFile(filename, []byte(""))
+	_, err := os.Stat(filename)
+	if err != nil && os.IsNotExist(err) {
+		MustWriteFile(filename, data)
+		return
+	}
+	if err != nil {
+		log.Fatalf("Cound NOT Get file Status: %v @ %s", err, Caller(true))
 	}
 
 	file, err := os.OpenFile(filename, os.O_APPEND|os.O_WRONLY, FilePerm)
 	if err != nil {
-		log.Fatalf("Could NOT Open File to Write: %v @ %s", err, Caller(true))
+		log.Fatalf("Could NOT Open File to Append: %v @ %s", err, Caller(true))
 	}
 	defer file.Close()
 
 	if newline {
-		data = append(append([]byte{}, '\n'), data...)
+		data = append([]byte{'\n'}, data...)
 	}
 	if _, err = file.Write(data); err != nil {
-		log.Fatalf("Could NOT Write File: %v @ %s", err, Caller(true))
+		log.Fatalf("Could NOT Append File: %v @ %s", err, Caller(true))
 	}
 }
 

@@ -22,14 +22,14 @@ func TestRmHeadToLast(t *testing.T) {
 
 func TestMustWriteFile(t *testing.T) {
 	str := "hello write"
-	MustWriteFile("../a/b.log", []byte(str))
-	MustWriteFile("/root/a/b.log", []byte(str))
+	MustWriteFile("../a/b/c.log", []byte(str))
+	// MustWriteFile("/root/a/b.log", []byte(str))
 }
 
 func TestMustAppendFile(t *testing.T) {
 	str := "hello append"
-	MustAppendFile("../a/b.log", []byte(str), true)
-	MustAppendFile("/root/a/b.log", []byte(str), true)
+	MustAppendFile("../a/b/c.log", []byte(str), true)
+	// MustAppendFile("/root/a/b.log", []byte(str), true)
 }
 
 // ------------------------------------------ //
