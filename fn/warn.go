@@ -59,6 +59,11 @@ func warnOnErr(lvl int, format string, v ...interface{}) error {
 	return nil
 }
 
+// Warner :
+func Warner(format string, v ...interface{}) {
+	warnOnErr(2, format+"%v", append(v, fEf(""))...)
+}
+
 // WarnOnErr : write error into Console OR File
 func WarnOnErr(format string, v ...interface{}) error {
 	return warnOnErr(2, format, v...)

@@ -28,3 +28,10 @@ func TestWarnP1OnErrWhen(t *testing.T) {
 	EnableLog2F(true, logfile4test)
 	FakeFuncWarnP(-5)
 }
+
+func TestWarner(t *testing.T) {
+	EnableWarnDetail(false)
+	Warner("hello")
+	EnableWarnDetail(true)
+	Warner("world")
+}
