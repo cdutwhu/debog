@@ -16,7 +16,7 @@ func failOnErr(lvl int, format string, v ...interface{}) {
 					switch {
 					case log2F && log2C:
 						// CONSOLE
-						v1 := append([]interface{}{red(typ)}, v...)
+						v1 := append([]interface{}{R(typ)}, v...)
 						fatalInfo := fSf("\t%s \t\""+format+"\"%s\n", append(v1, tc)...)
 						fPt(tmstr() + fatalInfo)
 						// FILE
@@ -32,7 +32,7 @@ func failOnErr(lvl int, format string, v ...interface{}) {
 
 					case !log2F && log2C:
 						// CONSOLE
-						v2 := append([]interface{}{red(typ)}, v...)
+						v2 := append([]interface{}{R(typ)}, v...)
 						fatalInfo := fSf("\t%s \t\""+format+"\"%s\n", append(v2, tc)...)
 						log.Fatalf(fatalInfo)
 					}

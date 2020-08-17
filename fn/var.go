@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/cdutwhu/debog/base"
+	clr "github.com/gookit/color"
 )
 
 var (
@@ -27,12 +28,12 @@ var (
 	trackCaller    = base.TrackCaller
 	caller         = base.Caller
 	rmTailFromLast = base.RmTailFromLast
-	blue           = base.B
-	red            = base.R
-	green          = base.G
-	yellow         = base.Y
-	white          = base.W
-	decolor        = base.DeColor
+
+	R = clr.FgRed.Render
+	G = clr.FgGreen.Render
+	B = clr.FgBlue.Render
+	Y = clr.FgYellow.Render
+	W = clr.FgWhite.Render
 )
 
 const (

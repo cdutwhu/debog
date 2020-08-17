@@ -16,7 +16,7 @@ func Logger(format string, v ...interface{}) {
 		item := fSf("\t%s \t\""+format+"\"\n", v1...)
 		log.Printf("%s", item)
 		// CONSOLE
-		v2 := append([]interface{}{green(typ)}, v...)
+		v2 := append([]interface{}{G(typ)}, v...)
 		item = fSf("\t%s \t\""+format+"\"\n", v2...)
 		fPt(tmstr() + item)
 
@@ -28,7 +28,7 @@ func Logger(format string, v ...interface{}) {
 
 	case !log2F && log2C:
 		// CONSOLE
-		v1 := append([]interface{}{green(typ)}, v...)
+		v1 := append([]interface{}{G(typ)}, v...)
 		item := fSf("\t%s \t\""+format+"\"\n", v1...)
 		log.Printf("%s", item)
 	}

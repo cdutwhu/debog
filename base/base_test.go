@@ -51,11 +51,6 @@ func TestFuncTrack(t *testing.T) {
 	fPln(FuncTrack(hello1))
 }
 
-func TestColorPrint(t *testing.T) {
-	// effect in bash
-	fPln(B("hello"))
-}
-
 func TestTrackCallerIn(t *testing.T) {
 	fPln(trackCaller(0))
 }

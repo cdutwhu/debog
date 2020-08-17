@@ -23,7 +23,7 @@ func warnOnErr(lvl int, format string, v ...interface{}) error {
 					case log2F && log2C:
 						for i := toF; i <= toC; i++ {
 							if i == toC {
-								typ = yellow(typ)
+								typ = Y(typ)
 							}
 							v1 := append([]interface{}{typ}, v...)
 							if warnWithDetail {
@@ -41,7 +41,7 @@ func warnOnErr(lvl int, format string, v ...interface{}) error {
 
 					case log2F && !log2C:
 					case !log2F && log2C:
-						typ = yellow(typ)
+						typ = Y(typ)
 					}
 
 					v1 := append([]interface{}{typ}, v...)

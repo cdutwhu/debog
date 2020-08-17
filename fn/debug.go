@@ -15,7 +15,7 @@ func debug(lvl int, format string, v ...interface{}) {
 		item := fSf("\t%s \t\""+format+"\"%s", append(v1, tc)...)
 		log.Printf("%s", item)
 		// CONSOLE
-		v2 := append([]interface{}{blue(typ)}, v...)
+		v2 := append([]interface{}{B(typ)}, v...)
 		item = fSf("\t%s \t\""+format+"\"%s", append(v2, tc)...)
 		fPt(tmstr() + item)
 
@@ -27,7 +27,7 @@ func debug(lvl int, format string, v ...interface{}) {
 
 	case !log2F && log2C:
 		// CONSOLE
-		v1 := append([]interface{}{blue(typ)}, v...)
+		v1 := append([]interface{}{B(typ)}, v...)
 		item := fSf("\t%s \t\""+format+"\"%s", append(v1, tc)...)
 		log.Printf("%s", item)
 	}
