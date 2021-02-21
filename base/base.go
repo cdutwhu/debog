@@ -1,7 +1,6 @@
 package base
 
 import (
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -31,7 +30,7 @@ func MustWriteFile(filename string, data []byte) {
 	}
 
 WRITE:
-	if err := ioutil.WriteFile(filename, data, FilePerm); err != nil {
+	if err := os.WriteFile(filename, data, FilePerm); err != nil {
 		log.Fatalf("Could NOT Write File: %v @ %s", err, Caller(true))
 	}
 }

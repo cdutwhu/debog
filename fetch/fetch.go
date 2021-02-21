@@ -1,7 +1,7 @@
 package fetch
 
 import (
-	"io/ioutil"
+	"os"
 	"regexp"
 	"time"
 )
@@ -15,7 +15,7 @@ func GetLog(logFile, logType string, tmBackwards int, desc bool) []string {
 	r := regexp.MustCompile(`.+@.+[\+-][ 0-9]{2}\.[0-9]\.log$`)
 	failP1OnErrWhen(!r.MatchString(logFile), "%v", fEf("logFile is not acceptable format"))
 
-	bytes, err := ioutil.ReadFile(logFile)
+	bytes, err := os.ReadFile(logFile)
 	failP1OnErr("%v", err)
 
 	logFileHead := logFile[:len(logFile)-4]     // remove ".log"
