@@ -26,7 +26,7 @@ func MustWriteFile(filename string, data []byte) {
 		goto WRITE
 	}
 	if err != nil {
-		log.Fatalf("Cound NOT Get file Status: %v @ %s", err, Caller(true))
+		log.Fatalf("Could NOT Get file Status: %v @ %s", err, Caller(true))
 	}
 
 WRITE:
@@ -43,7 +43,7 @@ func MustAppendFile(filename string, data []byte, newline bool) {
 		return
 	}
 	if err != nil {
-		log.Fatalf("Cound NOT Get file Status: %v @ %s", err, Caller(true))
+		log.Fatalf("Could NOT Get file Status: %v @ %s", err, Caller(true))
 	}
 
 	file, err := os.OpenFile(filename, os.O_APPEND|os.O_WRONLY, FilePerm)
@@ -62,14 +62,31 @@ func MustAppendFile(filename string, data []byte, newline bool) {
 
 // Exist :
 func Exist(e interface{}, set ...interface{}) bool {
-	v := reflect.ValueOf(set)
-	l := v.Len()
-	for i := 0; i < l; i++ {
-		if v.Index(i).Interface() == e {
+	// v := reflect.ValueOf(set)
+	// l := v.Len()
+	// for i := 0; i < l; i++ {
+	// 	if v.Index(i).Interface() == e {
+	// 		return true
+	// 	}
+	// }
+	// return false
+
+	for _, item := range set {
+		if item == e {
 			return true
 		}
 	}
 	return false
+}
+
+// NotExist :
+func NotExist(e interface{}, set ...interface{}) bool {
+	for _, item := range set {
+		if item == e {
+			return false
+		}
+	}
+	return true
 }
 
 // RmTailFromLast :

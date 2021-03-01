@@ -7,6 +7,11 @@ func TestExist(t *testing.T) {
 	fPln(Exist(1))
 	fPln(Exist(1, 2, 3))
 	fPln(Exist(1, 3, 2, 1))
+	fPln(" ------------- ")
+	fPln(NotExist(1, 1))
+	fPln(NotExist(1))
+	fPln(NotExist(1, 2, 3))
+	fPln(NotExist(1, 3, 2, 1))
 }
 
 func TestRmTailFromLast(t *testing.T) {
